@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CricketVision Analytics</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+
+            background:
+                linear-gradient(135deg,
+                    #030712,
+                    #07192d,
+                    #0c2d5f);
+
+            overflow-x: hidden;
+            color: white;
+
+        }
+
+        /* Scrollbar */
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2d91ff;
+            border-radius: 20px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #061321;
+        }
+
+        /********************
+Animated Background
+********************/
+
+        .background {
+
+            position: fixed;
+
+            inset: 0;
+
+            overflow: hidden;
+
+            z-index: -10;
+
+        }
+
+        .background span {
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            background: rgba(0, 149, 255, .08);
+
+            animation: float 22s linear infinite;
+
+            filter: blur(2px);
+
+        }
+
+        .background span:nth-child(1) {
+
+            width: 350px;
+            height: 350px;
+
+            left: -120px;
+            top: -90px;
+
+        }
+
+        .background span:nth-child(2) {
+
+            width: 260px;
+            height: 260px;
+
+            right: -80px;
+            top: 120px;
+
+            animation-duration: 18s;
+
+        }
+
+        .background span:nth-child(3) {
+
+            width: 200px;
+            height: 200px;
+
+            left: 18%;
+            bottom: -60px;
+
+            animation-duration: 15s;
+
+        }
+
+        .background span:nth-child(4) {
+
+            width: 420px;
+            height: 420px;
+
+            right: 8%;
+            bottom: -180px;
+
+            animation-duration: 24s;
+
+        }
+
+        @keyframes float {
+
+            0% {
+                transform: translateY(0) rotate(0);
+            }
+
+            50% {
+                transform: translateY(-70px) rotate(180deg);
+            }
+
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+
+        }
+
+        /********************
+Navbar
+********************/
+
+        header {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            padding: 18px 8%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            background: rgba(5, 15, 32, .65);
+
+            backdrop-filter: blur(20px);
+
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+
+            z-index: 999;
+
+        }
+
+        .logo {
+
+            font-size: 28px;
+
+            font-weight: 700;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+        .logo i {
+
+            color: #38a5ff;
+
+        }
+
+        nav {
+
+            display: flex;
+
+            gap: 18px;
+
+        }
+
+        nav a {
+
+            text-decoration: none;
+
+            color: white;
+
+            padding: 12px 22px;
+
+            border-radius: 40px;
+
+            transition: .35s;
+
+            font-size: 15px;
+
+        }
+
+        nav a:hover {
+
+            background: #1976ff;
+
+            transform: translateY(-3px);
+
+        }
+
+        .analytics {
+
+            background:
+                linear-gradient(135deg,
+                    #2196f3,
+                    #00c8ff);
+
+            box-shadow:
+                0 12px 35px rgba(0, 132, 255, .35);
+
+        }
+
+        /********************
+Hero
+********************/
+
+        .hero {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 120px 8% 50px;
+
+            gap: 40px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .left {
+
+            flex: 1;
+
+            min-width: 350px;
+
+        }
+
+        .left h1 {
+
+            font-size: 68px;
+
+            line-height: 1.1;
+
+            margin-bottom: 25px;
+
+            font-weight: 800;
+
+        }
+
+        .left h1 span {
+
+            background:
+
+                linear-gradient(90deg,
+                    #59b8ff,
+                    #84efff);
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+        }
+
+        .left p {
+
+            font-size: 18px;
+
+            color: #bfd7ff;
+
+            line-height: 1.9;
+
+            margin-bottom: 40px;
+
+            max-width: 650px;
+
+        }
+
+        .buttons {
+
+            display: flex;
+
+            gap: 18px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .btn {
+
+            padding: 16px 34px;
+
+            border-radius: 50px;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            transition: .35s;
+
+        }
+
+        .primary {
+
+            background:
+
+                linear-gradient(135deg,
+                    #1578ff,
+                    #00b7ff);
+
+            color: white;
+
+            box-shadow:
+
+                0 20px 45px rgba(0, 132, 255, .35);
+
+        }
+
+        .secondary {
+
+            background:
+
+                rgba(255, 255, 255, .05);
+
+            border: 1px solid rgba(255, 255, 255, .1);
+
+            backdrop-filter: blur(15px);
+
+            color: white;
+
+        }
+
+        .btn:hover {
+
+            transform: translateY(-5px);
+
+        }
+
+        /********************
+Hero Right
+********************/
+
+        .right {
+
+            flex: 1;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            min-width: 400px;
+
+            position: relative;
+
+        }
+
+        .scene {
+
+            width: 600px;
+
+            height: 600px;
+
+            position: relative;
+
+        }
+
+        /************************************************
+            3D STADIUM
+************************************************/
+
+        .stadium {
+
+            position: absolute;
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: 480px;
+            height: 480px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            animation: stadiumFloat 6s ease-in-out infinite;
+
+        }
+
+        /************ Glow ************/
+
+        .stadium-glow {
+
+            position: absolute;
+
+            width: 430px;
+            height: 430px;
+
+            border-radius: 50%;
+
+            background: #1d8fff;
+
+            filter: blur(120px);
+
+            opacity: .28;
+
+            animation: pulse 5s ease infinite;
+
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+
+                transform: scale(.95);
+
+                opacity: .20;
+
+            }
+
+            50% {
+
+                transform: scale(1.1);
+
+                opacity: .38;
+
+            }
+
+        }
+
+        /************ Outer Ring ************/
+
+        .outer-ring {
+
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            border-radius: 50%;
+
+            border: 2px solid rgba(255, 255, 255, .08);
+
+            background:
+
+                radial-gradient(circle,
+
+                    rgba(255, 255, 255, .05),
+
+                    rgba(255, 255, 255, .01));
+
+            animation: rotateRing 28s linear infinite;
+
+            box-shadow:
+
+                0 0 60px rgba(0, 150, 255, .15);
+
+        }
+
+        /************ Middle Ring ************/
+
+        .middle-ring {
+
+            position: absolute;
+
+            width: 340px;
+            height: 340px;
+
+            border-radius: 50%;
+
+            border: 2px solid rgba(80, 180, 255, .18);
+
+            animation: rotateReverse 20s linear infinite;
+
+        }
+
+        /************ Stadium Base ************/
+
+        .base {
+
+            position: absolute;
+
+            width: 280px;
+            height: 280px;
+
+            border-radius: 50%;
+
+            background:
+
+                linear-gradient(145deg,
+                    #183d6d,
+                    #081829);
+
+            box-shadow:
+
+                0 40px 90px rgba(0, 0, 0, .45),
+
+                inset 0 8px 25px rgba(255, 255, 255, .08);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        /************ Cricket Field ************/
+
+        .field {
+
+            width: 180px;
+            height: 180px;
+
+            border-radius: 50%;
+
+            background:
+
+                radial-gradient(circle,
+
+                    #4caf50,
+
+                    #2e7d32);
+
+            position: relative;
+
+            overflow: hidden;
+
+            box-shadow:
+
+                inset 0 10px 20px rgba(255, 255, 255, .15);
+
+        }
+
+        /******** Pitch ********/
+
+        .pitch {
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: 42px;
+            height: 120px;
+
+            border-radius: 30px;
+
+            background:
+
+                linear-gradient(180deg,
+                    #d9c28a,
+                    #a37d42);
+
+        }
+
+        /******** Pitch Lines ********/
+
+        .pitch::before {
+
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 3px;
+            height: 120px;
+
+            background: white;
+
+            opacity: .6;
+
+        }
+
+        /************ Flood Lights ************/
+
+        .light {
+
+            position: absolute;
+
+            width: 18px;
+            height: 120px;
+
+            background:
+
+                linear-gradient(180deg,
+                    #7a8ba3,
+                    #4d5d73);
+
+            border-radius: 20px;
+
+        }
+
+        .light::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: -20px;
+            left: -12px;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            background: #ffffff;
+
+            box-shadow:
+
+                0 0 25px white,
+
+                0 0 70px #65d3ff,
+
+                0 0 120px #3ba9ff;
+
+        }
+
+        .l1 {
+
+            left: 35px;
+            top: 70px;
+
+        }
+
+        .l2 {
+
+            right: 35px;
+            top: 70px;
+
+        }
+
+        .l3 {
+
+            left: 35px;
+            bottom: 70px;
+
+        }
+
+        .l4 {
+
+            right: 35px;
+            bottom: 70px;
+
+        }
+
+        /************ Orbit Ring ************/
+
+        .orbit {
+
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            animation: rotateRing 12s linear infinite;
+
+        }
+
+        /************ Analytics Nodes ************/
+
+        .node {
+
+            position: absolute;
+
+            width: 54px;
+            height: 54px;
+
+            border-radius: 50%;
+
+            background:
+
+                linear-gradient(145deg,
+                    #31a4ff,
+                    #0f5ddf);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            box-shadow:
+
+                0 0 30px rgba(0, 140, 255, .5);
+
+            color: white;
+
+            font-size: 20px;
+
+        }
+
+        .node:nth-child(1) {
+
+            top: -10px;
+            left: 220px;
+
+        }
+
+        .node:nth-child(2) {
+
+            bottom: -10px;
+            left: 220px;
+
+        }
+
+        .node:nth-child(3) {
+
+            left: -10px;
+            top: 220px;
+
+        }
+
+        .node:nth-child(4) {
+
+            right: -10px;
+            top: 220px;
+
+        }
+
+        /************ Cricket Ball ************/
+
+        .ball {
+
+            position: absolute;
+
+            width: 55px;
+            height: 55px;
+
+            border-radius: 50%;
+
+            background:
+
+                radial-gradient(circle at 30% 30%,
+
+                    #ff9f9f,
+
+                    #d40000);
+
+            right: 90px;
+
+            top: 70px;
+
+            box-shadow:
+
+                0 0 30px rgba(255, 0, 0, .6);
+
+            animation: ballOrbit 5s linear infinite;
+
+        }
+
+        .ball::before {
+
+            content: "";
+
+            position: absolute;
+
+            left: 25px;
+
+            width: 3px;
+            height: 55px;
+
+            background: white;
+
+        }
+
+        @keyframes ballOrbit {
+
+            0% {
+
+                transform:
+                    rotate(0deg) translateX(140px) rotate(0deg);
+
+            }
+
+            100% {
+
+                transform:
+                    rotate(360deg) translateX(140px) rotate(-360deg);
+
+            }
+
+        }
+
+        /************ Floating KPI Cards ************/
+
+        .info {
+
+            position: absolute;
+
+            padding: 18px 24px;
+
+            background: rgba(255, 255, 255, .08);
+
+            border: 1px solid rgba(255, 255, 255, .12);
+
+            backdrop-filter: blur(18px);
+
+            border-radius: 22px;
+
+            box-shadow:
+
+                0 15px 35px rgba(0, 0, 0, .3);
+
+            animation: floatCard 5s ease-in-out infinite;
+
+        }
+
+        .info h4 {
+
+            color: #7fc8ff;
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+
+        }
+
+        .info h2 {
+
+            font-size: 28px;
+
+        }
+
+        .matches {
+
+            top: 20px;
+            left: -30px;
+
+        }
+
+        .players {
+
+            bottom: 20px;
+            left: -15px;
+
+            animation-delay: 1.5s;
+
+        }
+
+        .teams {
+
+            right: -25px;
+            top: 180px;
+
+            animation-delay: 3s;
+
+        }
+
+        @keyframes floatCard {
+
+            0%,
+            100% {
+
+                transform: translateY(0);
+
+            }
+
+            50% {
+
+                transform: translateY(-15px);
+
+            }
+
+        }
+
+        @keyframes rotateRing {
+
+            from {
+
+                transform: rotate(0deg);
+
+            }
+
+            to {
+
+                transform: rotate(360deg);
+
+            }
+
+        }
+
+        @keyframes rotateReverse {
+
+            from {
+
+                transform: rotate(360deg);
+
+            }
+
+            to {
+
+                transform: rotate(0deg);
+
+            }
+
+        }
+
+        @keyframes stadiumFloat {
+
+            0%,
+            100% {
+
+                transform:
+                    translate(-50%, -50%) translateY(0);
+
+            }
+
+            50% {
+
+                transform:
+                    translate(-50%, -50%) translateY(-18px);
+
+            }
+        }
+
+        section {
+            padding: 100px 8%;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-sub {
+            max-width: 760px;
+            margin: auto;
+            text-align: center;
+            color: #bfd7ff;
+            line-height: 1.8;
+            margin-bottom: 60px;
+        }
+
+        /********************************
+Feature Cards
+********************************/
+
+        .grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 28px;
+
+        }
+
+        .card {
+
+            background: rgba(255, 255, 255, .06);
+
+            border: 1px solid rgba(255, 255, 255, .08);
+
+            backdrop-filter: blur(20px);
+
+            border-radius: 25px;
+
+            padding: 35px;
+
+            transition: .35s;
+
+        }
+
+        .card:hover {
+
+            transform: translateY(-10px);
+
+            box-shadow:
+
+                0 25px 60px rgba(0, 140, 255, .18);
+
+        }
+
+        .card i {
+
+            font-size: 42px;
+
+            color: #37a7ff;
+
+            margin-bottom: 20px;
+
+        }
+
+        .card h2 {
+
+            margin-bottom: 15px;
+
+        }
+
+        .card p {
+
+            color: #bfd7ff;
+
+            line-height: 1.8;
+
+        }
+
+        /********************************
+Footer
+********************************/
+
+        footer {
+
+            padding: 35px;
+
+            text-align: center;
+
+            border-top: 1px solid rgba(255, 255, 255, .08);
+
+            color: #8aa7d8;
+
+        }
+
+        /********************************
+Responsive
+********************************/
+
+        @media(max-width:1100px) {
+
+            .hero {
+
+                flex-direction: column;
+
+                text-align: center;
+
+            }
+
+            .left h1 {
+
+                font-size: 52px;
+
+            }
+
+            .scene {
+
+                width: 500px;
+                height: 500px;
+
+            }
+
+        }
+
+        @media(max-width:768px) {
+
+            header {
+
+                flex-direction: column;
+
+                gap: 18px;
+
+                padding: 18px;
+
+            }
+
+            nav {
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+            }
+
+            .left h1 {
+
+                font-size: 38px;
+
+            }
+
+            .left p {
+
+                font-size: 16px;
+
+            }
+
+            .scene {
+
+                width: 360px;
+
+                height: 360px;
+
+            }
+
+            .stadium {
+
+                transform: translate(-50%, -50%) scale(.75);
+
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="background">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+    <header>
+
+        <div class="logo">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            CricketVision Analytics
+
+        </div>
+
+        <nav>
+
+            <a href="#">Home</a>
+
+            <a href="#features">Features</a>
+
+            <a href="#about">About</a>
+
+            <a href="#contact">Contact</a>
+
+            <a href="/analytics" class="analytics">
+
+                Analytics
+
+            </a>
+
+        </nav>
+
+    </header>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="left">
+
+            <h1>
+
+                Business Intelligence for
+
+                <span>IPL Performance Analytics</span>
+
+            </h1>
+
+            <p>
+
+                Transform raw IPL match statistics into meaningful insights through
+                interactive dashboards, player comparisons, venue intelligence,
+                performance analytics and business-ready visualizations.
+
+            </p>
+
+            <div class="buttons">
+
+                <a href="/analytics" class="btn primary">
+
+                    Launch Analytics
+
+                </a>
+
+                <a href="#features" class="btn secondary">
+
+                    Explore Platform
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="right">
+
+            <div class="scene">
+
+                <div class="stadium">
+
+                    <div class="stadium-glow"></div>
+
+                    <div class="outer-ring"></div>
+
+                    <div class="middle-ring"></div>
+
+                    <div class="orbit">
+
+                        <div class="node">
+
+                            <i class="fa-solid fa-chart-column"></i>
+
+                        </div>
+
+                        <div class="node">
+
+                            <i class="fa-solid fa-trophy"></i>
+
+                        </div>
+
+                        <div class="node">
+
+                            <i class="fa-solid fa-users"></i>
+
+                        </div>
+
+                        <div class="node">
+
+                            <i class="fa-solid fa-database"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="light l1"></div>
+
+                    <div class="light l2"></div>
+
+                    <div class="light l3"></div>
+
+                    <div class="light l4"></div>
+
+                    <div class="base">
+
+                        <div class="field">
+
+                            <div class="pitch"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="ball"></div>
+
+                    <div class="info matches">
+
+                        <h4>Total Matches</h4>
+
+                        <h2>1000+</h2>
+
+                    </div>
+
+                    <div class="info players">
+
+                        <h4>Players</h4>
+
+                        <h2>500+</h2>
+
+                    </div>
+
+                    <div class="info teams">
+
+                        <h4>Teams</h4>
+
+                        <h2>10+</h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- ================= FEATURES ================= -->
+
+    <section id="features">
+
+        <h1 class="section-title">
+            Powerful Analytics Solutions
+        </h1>
+
+        <p class="section-sub">
+            Explore IPL data through interactive business intelligence dashboards,
+            player analytics, venue insights and advanced statistical visualizations.
+        </p>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <h2>Performance Dashboard</h2>
+
+                <p>
+                    Monitor batting, bowling, strike rate,
+                    economy and match-winning performances using
+                    visually rich dashboards.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-users"></i>
+
+                <h2>Player Comparison</h2>
+
+                <p>
+                    Compare multiple players across seasons,
+                    franchises and match situations with
+                    intuitive graphical reports.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <h2>Venue Intelligence</h2>
+
+                <p>
+                    Understand pitch behaviour,
+                    average scores,
+                    toss impact,
+                    venue performance and historical trends.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-trophy"></i>
+
+                <h2>Team Insights</h2>
+
+                <p>
+                    Discover franchise strengths,
+                    weaknesses,
+                    win percentage,
+                    season progression
+                    and championship performance.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-chart-pie"></i>
+
+                <h2>Interactive Visualization</h2>
+
+                <p>
+                    Business-grade charts,
+                    KPIs,
+                    performance metrics
+                    and intuitive graphical storytelling.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-database"></i>
+
+                <h2>Reliable Data</h2>
+
+                <p>
+                    Structured IPL datasets transformed into
+                    meaningful analytics for decision making
+                    and performance evaluation.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+
+    <section id="about">
+
+        <h1 class="section-title">
+
+            Why CricketVision Analytics?
+
+        </h1>
+
+        <p class="section-sub">
+
+            CricketVision Analytics is a modern business intelligence platform
+            developed for IPL performance analysis.
+            It simplifies complex cricket statistics through
+            elegant dashboards,
+            insightful visualizations
+            and interactive reports,
+            helping users understand performance at every level.
+
+        </p>
+
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+
+    <section id="contact">
+
+        <h1 class="section-title">
+
+            Start Exploring Today
+
+        </h1>
+
+        <p class="section-sub">
+
+            Experience powerful IPL analytics through an interactive
+            Flask-powered dashboard built for modern business intelligence.
+
+        </p>
+
+        <div style="
+    display:flex;
+    justify-content:center;
+    margin-top:35px;">
+
+            <a href="/analytics" class="btn primary">
+
+                Open Analytics Dashboard
+
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <h3 style="margin-bottom:10px;">
+            CricketVision Analytics
+        </h3>
+
+        <p>
+            Business Intelligence Platform for IPL Performance Analysis
+        </p>
+
+        <br>
+
+        <p style="font-size:14px;color:#7fa4d8;">
+
+            © 2026 CricketVision Analytics.
+            All Rights Reserved.
+
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
